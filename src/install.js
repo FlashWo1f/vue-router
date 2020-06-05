@@ -4,6 +4,7 @@ import Link from './components/link'
 export let _Vue
 
 export function install (Vue) {
+  // 防止插件被多次安装 - 当 install 方法被同一个插件多次调用，插件将只会被安装一次。
   if (install.installed && _Vue === Vue) return
   install.installed = true
 
