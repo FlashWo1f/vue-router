@@ -19,15 +19,15 @@ export default class VueRouter {
   static install: () => void;
   static version: string;
 
-  app: any;
+  app: any; // Vue 实例
   apps: Array<any>;
   ready: boolean;
   readyCbs: Array<Function>;
-  options: RouterOptions;
-  mode: string;
+  options: RouterOptions; // 路由配置
+  mode: string; // 路由模式，默认 hash
   history: HashHistory | HTML5History | AbstractHistory;
-  matcher: Matcher;
-  fallback: boolean;
+  matcher: Matcher; // 一个数组，包含当前路由的所有嵌套路径片段的路由记录。
+  fallback: boolean; // 当浏览器不支持 history.pushState 控制路由是否应该回退到 hash 模式。
   beforeHooks: Array<?NavigationGuard>;
   resolveHooks: Array<?NavigationGuard>;
   afterHooks: Array<?AfterNavigationHook>;
@@ -83,6 +83,7 @@ export default class VueRouter {
   init (app: any /* Vue component instance */) {
     process.env.NODE_ENV !== 'production' && assert(
       install.installed,
+      // 没有安装。在创建根实例之前，请确保调用 Vue.use(VueRouter)
       `not installed. Make sure to call \`Vue.use(VueRouter)\` ` +
       `before creating root instance.`
     )
@@ -129,7 +130,7 @@ export default class VueRouter {
       })
     })
   }
-
+  // 放到调用队列中
   beforeEach (fn: Function): Function {
     return registerHook(this.beforeHooks, fn)
   }
